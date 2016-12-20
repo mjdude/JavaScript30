@@ -58,17 +58,35 @@
   <audio data-key="76" src="sounds/tink.wav"></audio>
 
 <script>
-  window.addEventListener('keydown', function(e){
+  function playSound(e){
     const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
-    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // . selects class. Can also use div [data-key="${e.keyCode}"] 
-    console.log(key);
+    const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // . selects class. Can also use div [data-key="${e.keyCode}"]
     if (!audio) {
       return; // stop function from running if key is not found
     }
     audio.currentTime = 0; // rewinds to the start of the file
     audio.play();
-  })
+     // same as using jQuery key.addClass('.playing'); add's playing class from css
+     // can also use .remove and .toggle to change classes
+    key.classList.add('playing');
 
+  }
+  function removeTransition(e){
+      if (e.propertyName !== 'transform' ) {
+        return; // skip any transition that isnt transform
+      }
+
+      // this is equal to what was called against it, in this case this = key
+      this.classList.remove('playing');
+
+  };
+
+  const keys = document.querySelectorAll(`.key`);
+  keys.forEach((key) => {
+    key.addEventListener('transitionend', removeTransition)
+  });
+
+  window.addEventListener('keydown', playSound);
 </script>
 
 
