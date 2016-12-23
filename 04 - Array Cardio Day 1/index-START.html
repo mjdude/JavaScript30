@@ -90,6 +90,18 @@
 
     // 7. sort Exercise
     // Sort the people alphabetically by last name
+    const peopleByLastName = people.sort((a,b) => {
+      const a_names = a.split(', ');
+      const b_names = b.split(', ');
+
+      console.log(`comparing ${a_names[1]} with ${b_names[1]}`);
+      const res = a_names[1] > b_names[1] ? a_names[1] : b_names[1];
+      console.log(`alpha is ${res}`);
+      return a_names[1] > b_names[1] ? 1 : -1;
+    });
+
+    console.log('People by last names:');
+    console.log(peopleByLastName);
 
     // 8. Reduce Exercise
     // Sum up the instances of each of these
