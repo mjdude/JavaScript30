@@ -31,13 +31,12 @@ fetch(endpoint).then((blob) => {
     console.log(e);
   })
 
-  function findMatches(word, cities){
-    return cities.filter((city) => {
-      if (city.city.includes(word) || city.state.includes(word)) {
-          return true;
-      } else {
-        return false;
-      }
+  function findMatches(wordToMatch, cities){
+    return cities.filter((place) => {
+
+      // g means we will do a global search via the regex and i means case incensitive
+      const regex = new RegExp(wordToMatch, 'gi');
+      return place.city.match(regex) || place.state.match(regex);
     });
   }
 </script>
