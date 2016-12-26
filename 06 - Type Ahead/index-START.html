@@ -24,21 +24,45 @@ fetch(endpoint).then((blob) => {
 })
   .then((data) => {
     cities.push(...data);
-
-    console.log(findMatches('san', cities));
   })
   .catch((e) => {
     console.log(e);
   })
 
-  function findMatches(wordToMatch, cities){
-    return cities.filter((place) => {
+function findMatches(wordToMatch, cities){
+  return cities.filter((place) => {
 
-      // g means we will do a global search via the regex and i means case incensitive
-      const regex = new RegExp(wordToMatch, 'gi');
-      return place.city.match(regex) || place.state.match(regex);
-    });
-  }
+    // g means we will do a global search via the regex and i means case incensitive
+    const regex = new RegExp(wordToMatch, 'gi');
+    return place.city.match(regex) || place.state.match(regex);
+  });
+}
+
+
+function displayMatches(){
+  const matchArray = findMatches(this.value, cities);
+
+  // .join turns array into one big string
+  const html = matchArray.map((place) => {
+    return `
+    <li>
+      <span class='name'>${place.city}, ${place.state}</span>
+      <span class='population'>${place.population}</span>
+    </li>
+    `;
+  }).join('');
+  suggestions.innerHTML = html;
+};
+
+const searchInput = document.querySelector('.search');
+const suggestions = document.querySelector('.suggestions');
+
+// evertime a word is entered
+searchInput.addEventListener('change', displayMatches);
+// fire evertime a key is pressed
+searchInput.addEventListener('keyup', displayMatches);
+
+
 </script>
   </body>
 </html>
