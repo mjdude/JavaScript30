@@ -104,6 +104,20 @@
   </div>
 
 <script>
+// listen to shift key event
+// select all checkboxes
+// when shift key and checkbox is selected , check all relavent boxes by iterating
+
+window.addEventListener('keydown', (e) => {
+  console.log(e.keyCode);
+});
+
+const checkboxes = document.querySelectorAll('input');
+checkboxes.forEach((checkbox) => {
+  console.log(checkbox);
+
+})
+
 </script>
 </body>
 </html>
