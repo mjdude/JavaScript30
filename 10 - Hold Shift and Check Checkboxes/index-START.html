@@ -106,17 +106,50 @@
 <script>
 // listen to shift key event
 // select all checkboxes
+// get all inputs between checks t
 // when shift key and checkbox is selected , check all relavent boxes by iterating
+// turn into an array
+const checkboxes = [...document.querySelectorAll('input')];
+// checkboxes.forEach((checkbox) => {
+//   console.dir(checkbox);
+//   console.log(checkbox.checked);
+// })
 
 window.addEventListener('keydown', (e) => {
-  console.log(e.keyCode);
+  // console.log(e.keyCode);
+  if (e.keyCode===16) {
+    indices(checkboxes);
+  }
+
+
 });
 
-const checkboxes = document.querySelectorAll('input');
-checkboxes.forEach((checkbox) => {
-  console.log(checkbox);
+function indices(checkboxes){
+  let checkedIndices=[];
+  checkboxes.forEach((checkbox, index) => {
+    console.log('checkbox index is', index);
+    if (checkbox.checked === true) {
+      checkedIndices.push(index);
+    }
+  })
 
-})
+  checkboxes.forEach((checkbox, index) => {
+    if (index >= checkedIndices[0] && index <= checkedIndices[1] ) {
+      checkbox.checked = true;
+    }
+  })
+  // if( j > checkedIndices[0] && j < checkedIndices[1]){
+  //     console.log('j is ', j);
+  //     if (checkboxes[j].checked != true) {
+  //       checkboxes[j].checked = true;
+  //     }
+  //     j++;
+  //
+  // }  else {
+  //   console.log('j is ', j);
+  //   j++;
+  // }
+}
 
 </script>
 </body>
