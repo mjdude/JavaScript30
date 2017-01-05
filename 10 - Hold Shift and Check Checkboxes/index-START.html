@@ -104,28 +104,50 @@
   </div>
 
 <script>
-const checkboxes = [...document.querySelectorAll('input')];
-window.addEventListener('keydown', (e) => {
-  if (e.keyCode===16) {
-    indices(checkboxes);
+// const checkboxes = [...document.querySelectorAll('input')];
+// window.addEventListener('keydown', (e) => {
+//   if (e.keyCode===16) {
+//     indices(checkboxes);
+//   }
+//
+// });
+//
+// function indices(checkboxes){
+//   let checkedIndices=[];
+//   checkboxes.forEach((checkbox, index) => {
+//     if (checkbox.checked === true) {
+//       checkedIndices.push(index);
+//     }
+//   })
+//
+//   checkboxes.forEach((checkbox, index) => {
+//     if (index >= checkedIndices[0] && index <= checkedIndices[1] ) {
+//       checkbox.checked = true;
+//     }
+//   })
+// }
+//
+
+const checkboxes = document.querySelectorAll(['.inbox input[type="checkbox"]']);
+let lastChecked;
+let inBetween = false;
+function handleCheck(e){
+  if (e.shiftKey && this.checked) {
+    checkboxes.forEach((checkbox) => {
+      console.log(checkbox);
+      if (checkbox === this || checkbox === lastChecked) {
+        inBetween = !inBetween;
+      }
+
+      if (inBetween) {
+          checkbox.checked = true;
+      }
+    })
   }
-
-});
-
-function indices(checkboxes){
-  let checkedIndices=[];
-  checkboxes.forEach((checkbox, index) => {
-    if (checkbox.checked === true) {
-      checkedIndices.push(index);
-    }
-  })
-
-  checkboxes.forEach((checkbox, index) => {
-    if (index >= checkedIndices[0] && index <= checkedIndices[1] ) {
-      checkbox.checked = true;
-    }
-  })
+  lastChecked = this;
 }
+
+checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck))
 
 </script>
 </body>
