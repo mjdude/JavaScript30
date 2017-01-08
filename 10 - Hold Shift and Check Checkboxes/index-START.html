@@ -104,19 +104,50 @@
   </div>
 
 <script>
-// listen to shift key event
-// select all checkboxes
-// when shift key and checkbox is selected , check all relavent boxes by iterating
+// const checkboxes = [...document.querySelectorAll('input')];
+// window.addEventListener('keydown', (e) => {
+//   if (e.keyCode===16) {
+//     indices(checkboxes);
+//   }
+//
+// });
+//
+// function indices(checkboxes){
+//   let checkedIndices=[];
+//   checkboxes.forEach((checkbox, index) => {
+//     if (checkbox.checked === true) {
+//       checkedIndices.push(index);
+//     }
+//   })
+//
+//   checkboxes.forEach((checkbox, index) => {
+//     if (index >= checkedIndices[0] && index <= checkedIndices[1] ) {
+//       checkbox.checked = true;
+//     }
+//   })
+// }
+//
 
-window.addEventListener('keydown', (e) => {
-  console.log(e.keyCode);
-});
+const checkboxes = document.querySelectorAll(['.inbox input[type="checkbox"]']);
+let lastChecked;
+let inBetween = false;
+function handleCheck(e){
+  if (e.shiftKey && this.checked) {
+    checkboxes.forEach((checkbox) => {
+      console.log(checkbox);
+      if (checkbox === this || checkbox === lastChecked) {
+        inBetween = !inBetween;
+      }
 
-const checkboxes = document.querySelectorAll('input');
-checkboxes.forEach((checkbox) => {
-  console.log(checkbox);
+      if (inBetween) {
+          checkbox.checked = true;
+      }
+    })
+  }
+  lastChecked = this;
+}
 
-})
+checkboxes.forEach(checkbox => checkbox.addEventListener('click', handleCheck))
 
 </script>
 </body>
