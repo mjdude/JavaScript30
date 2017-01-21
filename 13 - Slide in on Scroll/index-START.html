@@ -43,6 +43,11 @@
   </div>
 
   <script>
+    // taken off the internet , since this is a framework free tutorial
+    // lodash also has a debounce function.
+    // see this for an explanation of the function : 
+    // https://john-dugan.com/javascript-debounce/
+
     function debounce(func, wait = 20, immediate = true) {
       var timeout;
       return function() {
@@ -58,6 +63,28 @@
       };
     }
 
+    const sliderImages = document.querySelectorAll('.slide-in');
+
+    function checkSlide(e){
+      sliderImages.forEach((sliderImage) => {
+
+        // half way into the image
+        const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+
+        // bottom of the image
+        const imageBottom = sliderImage.offsetTop + sliderImage.height;
+        const isHalfShown = slideInAt > sliderImage.offsetTop;
+        const isNotScrolledPast = window.scrollY < imageBottom;
+
+        if(isHalfShown && isNotScrolledPast){
+          sliderImage.classList.add('active');
+        } else{
+          sliderImage.classList.remove('active');          
+        }
+      })
+    }
+
+    window.addEventListener('scroll', debounce(checkSlide));
   </script>
 
   <style>
